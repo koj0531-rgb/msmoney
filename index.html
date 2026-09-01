@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>미세스머니 · 동탄역반도타운공인중개사</title>
+<meta name="description" content="동탄역 도보권 아파트·상가·단독건물. 9년간 동탄만 본 중개사가 직접 확인한 매물만 안내합니다.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+
+<style>
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root{
+  --pine:      #0F4034;   /* 메인 딥그린 */
+  --pine-deep: #0A2B23;
+  --brass:     #A87C3F;   /* 포인트 브라스 */
+  --ink:       #1B1B19;
+  --grey:      #6C6C66;
+  --line:      #DEDEDA;
+  --paper:     #FFFFFF;
+  --paper-2:   #F4F4F1;
+
+  --serif: "Noto Serif KR", "Nanum Myeongjo", serif;
+  --sans:  "Pretendard", "Pretendard Variable", -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+
+  --gutter: clamp(20px, 5vw, 76px);
+  --maxw: 1360px;
+  --ease: cubic-bezier(.22,.61,.36,1);
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%; scroll-behavior:smooth}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--sans); font-size:16px; line-height:1.75;
+  letter-spacing:-.01em; -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+h1,h2,h3{font-family:var(--serif); font-weight:600; letter-spacing:-.03em; line-height:1.38; margin:0}
+p{margin:0}
+:focus-visible{outline:2px solid var(--brass); outline-offset:3px}
+
+.wrap{max-width:var(--maxw); margin:0 auto; padding-inline:var(--gutter)}
+
+/* 얇은 밑줄 링크 — 롤렉스식 텍스트 CTA */
+.tlink{
+  display:inline-block; font-size:14px; font-weight:600; letter-spacing:.01em;
+  padding-bottom:6px; position:relative;
+}
+.tlink::after{
+  content:""; position:absolute; left:0; bottom:0; height:1px; width:100%;
+  background:currentColor; transform-origin:right;
+  transition:transform .45s var(--ease);
+}
+.tlink:hover::after{transform:scaleX(0); transform-origin:left}
+
+/* 섹션 표제: 짧은 세로선 + 텍스트 */
+.eyebrow{
+  font-size:13px; color:var(--brass); font-weight:600;
+  padding-left:14px; border-left:1px solid var(--brass); line-height:1.2;
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav{
+  position:fixed; inset:0 0 auto 0; z-index:100;
+  display:flex; align-items:center; gap:32px;
+  padding:22px var(--gutter);
+  color:#fff;
+  transition:background .5s var(--ease), color .5s var(--ease), padding .5s var(--ease);
+}
+.nav::after{
+  content:""; position:absolute; inset:auto 0 0 0; height:1px;
+  background:var(--line); opacity:0; transition:opacity .5s var(--ease);
+}
+.nav.is-solid{background:var(--paper); color:var(--ink); padding-block:16px}
+.nav.is-solid::after{opacity:1}
+
+.brand{display:flex; flex-direction:column; line-height:1.15}
+.brand b{font-family:var(--serif); font-size:20px; font-weight:600; letter-spacing:.06em}
+.brand span{font-size:11px; letter-spacing:.12em; opacity:.72}
+
+.menu{display:flex; gap:30px; margin-left:auto; font-size:14.5px; font-weight:500}
+.menu a{position:relative; padding-block:4px}
+.menu a::after{
+  content:""; position:absolute; left:0; bottom:0; height:1px; width:100%;
+  background:currentColor; transform:scaleX(0); transform-origin:left;
+  transition:transform .4s var(--ease);
+}
+.menu a:hover::after{transform:scaleX(1)}
+
+.callbtn{
+  border:1px solid currentColor; padding:9px 18px; font-size:14px; font-weight:600;
+  transition:background .35s var(--ease), color .35s var(--ease), border-color .35s var(--ease);
+}
+.callbtn:hover{background:var(--pine); border-color:var(--pine); color:#fff}
+.nav.is-solid .callbtn{border-color:var(--pine); color:var(--pine)}
+.nav.is-solid .callbtn:hover{color:#fff}
+
+.burger{display:none; margin-left:auto; width:26px; height:16px; position:relative}
+.burger i{position:absolute; left:0; width:100%; height:1.5px; background:currentColor; transition:.3s var(--ease)}
+.burger i:nth-child(1){top:0} .burger i:nth-child(2){top:7px} .burger i:nth-child(3){top:14px}
+.burger.on i:nth-child(1){top:7px; transform:rotate(45deg)}
+.burger.on i:nth-child(2){opacity:0}
+.burger.on i:nth-child(3){top:7px; transform:rotate(-45deg)}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{position:relative; height:100svh; min-height:600px; overflow:hidden; color:#fff}
+.hero__bg{
+  position:absolute; inset:-8% 0 0 0; height:116%;
+  /* ↓ 실제 사진으로 교체: background-image:url('dongtan-station.jpg') */
+  background:
+    radial-gradient(120% 80% at 72% 18%, rgba(214,178,116,.30), transparent 58%),
+    linear-gradient(180deg, #0B2A24 0%, #123B31 48%, #071A16 100%);
+  background-size:cover; background-position:center;
+  will-change:transform;
+}
+/* 도시 실루엣 (사진 넣으면 지워도 됨) */
+.hero__city{position:absolute; inset:auto 0 0 0; height:52%; opacity:.5}
+.hero__scrim{position:absolute; inset:0; background:linear-gradient(180deg, rgba(4,18,15,.62) 0%, rgba(4,18,15,.12) 42%, rgba(4,18,15,.78) 100%)}
+
+.hero__inner{
+  position:relative; height:100%; max-width:var(--maxw); margin:0 auto;
+  padding:0 var(--gutter) clamp(56px,9vh,110px);
+  display:flex; flex-direction:column; justify-content:flex-end;
+}
+.hero h1{
+  font-size:clamp(34px, 6.2vw, 82px); font-weight:600; color:#fff;
+  max-width:16ch; text-shadow:0 2px 30px rgba(0,0,0,.28);
+}
+.hero p{margin-top:22px; max-width:34ch; font-size:clamp(15px,1.6vw,18px); color:rgba(255,255,255,.86)}
+.hero .tlink{margin-top:34px}
+
+.scrollcue{
+  position:absolute; left:50%; bottom:26px; transform:translateX(-50%);
+  width:1px; height:54px; background:linear-gradient(180deg,transparent,rgba(255,255,255,.75));
+}
+.scrollcue::after{
+  content:""; position:absolute; inset:0; background:rgba(255,255,255,.95);
+  animation:drop 2.4s var(--ease) infinite;
+}
+@keyframes drop{0%{transform:scaleY(0);transform-origin:top}
+  50%{transform:scaleY(1);transform-origin:top}
+  51%{transform:scaleY(1);transform-origin:bottom}
+  100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* 로드 시퀀스 */
+.rise{opacity:0; transform:translateY(26px)}
+.loaded .rise{opacity:1; transform:none; transition:opacity 1s var(--ease), transform 1s var(--ease)}
+.loaded .rise:nth-child(2){transition-delay:.14s}
+.loaded .rise:nth-child(3){transition-delay:.26s}
+.loaded .rise:nth-child(4){transition-delay:.38s}
+
+/* ============================================================
+   LEDE
+   ============================================================ */
+.lede{padding:clamp(84px,12vw,150px) 0; text-align:center}
+.lede h2{font-size:clamp(24px,3.2vw,40px); max-width:22ch; margin:0 auto}
+.lede p{margin:26px auto 0; max-width:62ch; color:var(--grey); font-size:16.5px}
+
+/* ============================================================
+   CHAPTER
+   ============================================================ */
+.chapter{margin-bottom:clamp(72px,10vw,132px)}
+.chapter__visual{
+  position:relative; height:clamp(300px,58vh,620px); overflow:hidden; background:var(--pine-deep);
+}
+.chapter__visual .fill{position:absolute; inset:0; background-size:cover; background-position:center}
+.v-apt{background:
+  radial-gradient(90% 70% at 20% 0%, rgba(255,255,255,.22), transparent 60%),
+  linear-gradient(155deg,#1D5245 0%,#0F4034 55%,#08221C 100%)}
+.v-shop{background:
+  radial-gradient(80% 60% at 80% 100%, rgba(216,172,104,.42), transparent 62%),
+  linear-gradient(150deg,#2A2622 0%,#141210 100%)}
+.v-bldg{background:
+  radial-gradient(85% 70% at 50% 10%, rgba(190,205,198,.30), transparent 62%),
+  linear-gradient(160deg,#4A5551 0%,#202926 100%)}
+
+.chapter__cap{
+  display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.5fr); gap:clamp(24px,5vw,72px);
+  padding-top:34px; align-items:start;
+}
+.chapter__cap h3{font-size:clamp(20px,2.4vw,30px)}
+.chapter__cap p{color:var(--grey); max-width:56ch}
+.chapter__cap .tlink{margin-top:20px; color:var(--pine)}
+.chapter--flip .chapter__cap{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)}
+.chapter--flip .chapter__cap>div:first-child{order:2}
+.chapter--flip .chapter__cap>div:last-child{order:1}
+
+/* ============================================================
+   FINDER
+   ============================================================ */
+.finder{background:var(--paper-2); padding:clamp(72px,10vw,120px) 0; overflow:hidden}
+.finder__head{display:flex; flex-wrap:wrap; align-items:flex-end; gap:24px; justify-content:space-between}
+.finder__head h2{font-size:clamp(24px,3vw,38px); margin-top:16px}
+
+.tabs{display:flex; gap:6px; flex-wrap:wrap}
+.tab{
+  padding:10px 20px; font-size:14.5px; font-weight:600; color:var(--grey);
+  border:1px solid var(--line); background:#fff;
+  transition:.35s var(--ease);
+}
+.tab:hover{border-color:var(--pine); color:var(--pine)}
+.tab[aria-selected="true"]{background:var(--pine); border-color:var(--pine); color:#fff}
+
+.railwrap{position:relative; margin-top:44px}
+.rail{
+  display:flex; gap:22px; overflow-x:auto; scroll-snap-type:x mandatory;
+  padding-bottom:14px; scrollbar-width:none;
+  scroll-padding-left:0;
+}
+.rail::-webkit-scrollbar{display:none}
+
+.card{
+  flex:0 0 clamp(258px, 27vw, 336px); scroll-snap-align:start;
+  background:#fff; border:1px solid var(--line); border-radius:2px;
+}
+.card__img{height:210px; position:relative; overflow:hidden}
+.card__img .fill{position:absolute; inset:0; transition:transform 1.1s var(--ease)}
+.card:hover .card__img .fill{transform:scale(1.05)}
+.card__tag{
+  position:absolute; left:0; top:0; background:rgba(15,64,52,.94); color:#fff;
+  font-size:12px; font-weight:600; padding:7px 12px; letter-spacing:.02em;
+}
+.card__body{padding:22px 22px 26px}
+.card__body h4{font-family:var(--serif); font-size:19px; font-weight:600; margin:0 0 6px; letter-spacing:-.02em}
+.card__loc{font-size:13.5px; color:var(--grey)}
+.card__price{margin-top:16px; padding-top:14px; border-top:1px solid var(--line); font-size:17px; font-weight:700; color:var(--pine)}
+.card__spec{margin-top:12px; display:flex; flex-wrap:wrap; gap:6px}
+.card__spec span{font-size:12.5px; color:var(--grey); border:1px solid var(--line); padding:3px 9px}
+
+.arrows{display:flex; gap:10px; margin-top:26px}
+.arrow{
+  width:46px; height:46px; border:1px solid var(--line); background:#fff;
+  display:grid; place-items:center; transition:.35s var(--ease);
+}
+.arrow:hover:not(:disabled){background:var(--pine); border-color:var(--pine)}
+.arrow:hover:not(:disabled) svg{stroke:#fff}
+.arrow:disabled{opacity:.3; cursor:default}
+.arrow svg{width:15px; height:15px; stroke:var(--ink); stroke-width:1.6; fill:none}
+
+.empty{padding:52px 0; color:var(--grey); font-size:15px; display:none}
+
+/* ============================================================
+   PROOF
+   ============================================================ */
+.proof{padding:clamp(72px,10vw,120px) 0}
+.proof ul{list-style:none; margin:36px 0 0; padding:0; border-top:1px solid var(--line)}
+.proof li{
+  display:grid; grid-template-columns:minmax(120px,.5fr) minmax(0,2fr); gap:clamp(16px,4vw,48px);
+  padding:26px 0; border-bottom:1px solid var(--line); align-items:baseline;
+}
+.proof li b{font-family:var(--serif); font-size:clamp(19px,2vw,24px); font-weight:600; color:var(--pine)}
+.proof li p{color:var(--grey)}
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.contact{background:var(--pine); color:#fff; padding:clamp(76px,11vw,132px) 0}
+.contact__grid{display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); gap:clamp(32px,6vw,84px); align-items:center}
+.contact h2{font-size:clamp(24px,3.2vw,40px); color:#fff}
+.contact p{margin-top:20px; color:rgba(255,255,255,.78); max-width:44ch}
+.contact__num{
+  display:inline-block; font-family:var(--serif); font-size:clamp(28px,4vw,44px);
+  font-weight:600; letter-spacing:.01em; padding-bottom:10px; border-bottom:1px solid rgba(255,255,255,.45);
+  transition:border-color .4s var(--ease)
+}
+.contact__num:hover{border-color:var(--brass)}
+.contact__meta{margin-top:26px; font-size:14.5px; line-height:2; color:rgba(255,255,255,.8)}
+.contact__meta strong{color:#fff; font-weight:600; display:inline-block; width:70px}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer{background:var(--pine-deep); color:rgba(255,255,255,.62); padding:56px 0 40px; font-size:13.5px}
+.foot{display:flex; flex-wrap:wrap; gap:28px 60px; justify-content:space-between; align-items:flex-start}
+.foot .brand b{color:#fff}
+.foot nav{display:flex; gap:26px; flex-wrap:wrap}
+.foot nav a:hover{color:#fff}
+.foot__legal{width:100%; margin-top:38px; padding-top:24px; border-top:1px solid rgba(255,255,255,.14); font-size:12.5px; line-height:1.9}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width:900px){
+  .menu{
+    position:fixed; inset:64px 0 auto 0; flex-direction:column; gap:0;
+    background:var(--paper); color:var(--ink); padding:8px var(--gutter) 20px;
+    border-bottom:1px solid var(--line);
+    display:none;
+  }
+  .menu.open{display:flex}
+  .menu a{padding:15px 0; border-bottom:1px solid var(--line)}
+  .menu .callbtn{border:0; padding:15px 0; text-align:left; color:var(--pine)}
+  .burger{display:block}
+  .nav>.callbtn{display:none}
+  .chapter__cap, .chapter--flip .chapter__cap{grid-template-columns:1fr; gap:14px}
+  .chapter--flip .chapter__cap>div:first-child{order:1}
+  .chapter--flip .chapter__cap>div:last-child{order:2}
+  .contact__grid{grid-template-columns:1fr}
+  .proof li{grid-template-columns:1fr; gap:6px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important; transition-duration:.01ms !important}
+  html{scroll-behavior:auto}
+  .rise{opacity:1; transform:none}
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav" id="nav">
+  <a href="#top" class="brand">
+    <b>미세스머니</b>
+    <span>동탄역반도타운공인중개사</span>
+  </a>
+
+  <button class="burger" id="burger" aria-label="메뉴 열기" aria-expanded="false">
+    <i></i><i></i><i></i>
+  </button>
+
+  <nav class="menu" id="menu">
+    <a href="#finder">매물</a>
+    <a href="#apt">아파트</a>
+    <a href="#shop">상가·창업</a>
+    <a href="#proof">중개소 소개</a>
+    <a href="tel:01080306781" class="callbtn">010-8030-6781</a>
+  </nav>
+
+  <a href="tel:01080306781" class="callbtn">전화 상담</a>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="top">
+  <div class="hero__bg" id="heroBg">
+    <svg class="hero__city" viewBox="0 0 1440 400" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      <g fill="#04120F">
+        <rect x="0"    y="250" width="120" height="150"/>
+        <rect x="130"  y="196" width="86"  height="204"/>
+        <rect x="226"  y="284" width="140" height="116"/>
+        <rect x="376"  y="150" width="72"  height="250"/>
+        <rect x="458"  y="212" width="104" height="188"/>
+        <rect x="572"  y="96"  width="58"  height="304"/>
+        <rect x="640"  y="60"  width="66"  height="340"/>
+        <rect x="716"  y="128" width="54"  height="272"/>
+        <rect x="780"  y="230" width="128" height="170"/>
+        <rect x="918"  y="170" width="80"  height="230"/>
+        <rect x="1008" y="264" width="150" height="136"/>
+        <rect x="1168" y="184" width="74"  height="216"/>
+        <rect x="1252" y="240" width="188" height="160"/>
+      </g>
+      <g fill="#D8AC68" opacity=".55">
+        <rect x="648" y="86"  width="6" height="10"/><rect x="664" y="86"  width="6" height="10"/>
+        <rect x="648" y="112" width="6" height="10"/><rect x="682" y="112" width="6" height="10"/>
+        <rect x="580" y="124" width="6" height="10"/><rect x="600" y="150" width="6" height="10"/>
+        <rect x="386" y="178" width="6" height="10"/><rect x="410" y="204" width="6" height="10"/>
+        <rect x="928" y="200" width="6" height="10"/><rect x="952" y="228" width="6" height="10"/>
+        <rect x="1180" y="212" width="6" height="10"/><rect x="1204" y="240" width="6" height="10"/>
+      </g>
+    </svg>
+    <div class="hero__scrim"></div>
+  </div>
+
+  <div class="hero__inner">
+    <p class="eyebrow rise" style="color:#D8AC68;border-color:#D8AC68">동탄역 도보권</p>
+    <h1 class="rise">발품 대신,<br>확인된 매물만 봅니다</h1>
+    <p class="rise">9년째 동탄만 봤습니다. 계약서에 도장 찍기 전에 알아야 할 것들을 먼저 말씀드립니다.</p>
+    <a href="#finder" class="tlink rise" style="color:#fff">오늘 나온 매물 보기</a>
+  </div>
+
+  <div class="scrollcue" aria-hidden="true"></div>
+</section>
+
+<!-- ===================== LEDE ===================== -->
+<section class="lede wrap">
+  <h2>좋은 매물은 광고에 오래 걸려 있지 않습니다</h2>
+  <p>
+    현장을 직접 보고, 임대인과 통화하고, 관리비와 권리금까지 확인한 것만 올립니다.
+    그래서 목록은 짧습니다. 대신 헛걸음이 없습니다.
+  </p>
+</section>
+
+<!-- ===================== CHAPTERS ===================== -->
+<section class="chapter" id="apt">
+  <div class="chapter__visual"><div class="fill v-apt"></div></div>
+  <div class="wrap">
+    <div class="chapter__cap">
+      <div><h3>아파트</h3></div>
+      <div>
+        <p>
+          같은 단지라도 동과 층에 따라 사는 느낌이 완전히 다릅니다.
+          저녁에 주차 자리가 남는지, 초등학교까지 실제로 몇 분 걸리는지,
+          여름에 앞 동에 해가 가리는지 — 살아본 사람이 아는 것들을 먼저 확인해 드립니다.
+        </p>
+        <a href="#finder" class="tlink">아파트 매물 보기</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="chapter chapter--flip" id="shop">
+  <div class="chapter__visual"><div class="fill v-shop"></div></div>
+  <div class="wrap">
+    <div class="chapter__cap">
+      <div>
+        <p>
+          창업은 자리 싸움입니다. 유동인구 숫자보다 중요한 건
+          그 유동인구가 우리 가게 앞에서 멈추느냐입니다.
+          정화조 용량, 후드 배기, 위반건축물 여부처럼 계약 뒤에 발목 잡는 항목은
+          계약 전에 짚어 드립니다.
+        </p>
+        <a href="#finder" class="tlink">상가·점포 보기</a>
+      </div>
+      <div><h3>상가 · 창업</h3></div>
+    </div>
+  </div>
+</section>
+
+<section class="chapter">
+  <div class="chapter__visual"><div class="fill v-bldg"></div></div>
+  <div class="wrap">
+    <div class="chapter__cap">
+      <div><h3>단독건물 · 투자</h3></div>
+      <div>
+        <p>
+          수익률은 계산기로 나오지만, 그 수익률이 3년 뒤에도 유지될지는 상권이 정합니다.
+          공실 이력과 임차인 구성, 주변 신축 공급까지 함께 보고 판단하시도록 자료를 정리해 드립니다.
+        </p>
+        <a href="#finder" class="tlink">건물 매물 보기</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FINDER ===================== -->
+<section class="finder" id="finder">
+  <div class="wrap">
+    <div class="finder__head">
+      <div>
+        <p class="eyebrow">이번 주 업데이트</p>
+        <h2>찾으시는 조건부터 골라 보세요</h2>
+      </div>
+      <div class="tabs" role="tablist" aria-label="매물 종류">
+        <button class="tab" role="tab" aria-selected="true"  data-filter="all">전체</button>
+        <button class="tab" role="tab" aria-selected="false" data-filter="apt">아파트</button>
+        <button class="tab" role="tab" aria-selected="false" data-filter="shop">상가·점포</button>
+        <button class="tab" role="tab" aria-selected="false" data-filter="bldg">단독건물</button>
+      </div>
+    </div>
+
+    <div class="railwrap">
+      <div class="rail" id="rail">
+
+        <article class="card" data-type="apt">
+          <div class="card__img"><div class="fill v-apt"></div><span class="card__tag">매매</span></div>
+          <div class="card__body">
+            <h4>동탄역 도보 5분 · 84㎡</h4>
+            <p class="card__loc">화성시 오산동 · 고층 남향</p>
+            <p class="card__price">예시 · 매매 00억 0,000만</p>
+            <div class="card__spec"><span>확장</span><span>올수리</span><span>즉시입주</span></div>
+          </div>
+        </article>
+
+        <article class="card" data-type="apt">
+          <div class="card__img"><div class="fill v-apt"></div><span class="card__tag">전세</span></div>
+          <div class="card__body">
+            <h4>초품아 단지 · 59㎡</h4>
+            <p class="card__loc">화성시 청계동 · 중층 판상형</p>
+            <p class="card__price">예시 · 전세 0억 0,000만</p>
+            <div class="card__spec"><span>단지 내 초교</span><span>주차 여유</span></div>
+          </div>
+        </article>
+
+        <article class="card" data-type="shop">
+          <div class="card__img"><div class="fill v-shop"></div><span class="card__tag">임대</span></div>
+          <div class="card__body">
+            <h4>1층 코너 · 25평</h4>
+            <p class="card__loc">동탄역 인근 · 전면 노출 2면</p>
+            <p class="card__price">예시 · 보 0,000 / 월 000</p>
+            <div class="card__spec"><span>정화조 확인</span><span>배기 가능</span><span>주차 3대</span></div>
+          </div>
+        </article>
+
+        <article class="card" data-type="shop">
+          <div class="card__img"><div class="fill v-shop"></div><span class="card__tag">권리금</span></div>
+          <div class="card__body">
+            <h4>영업 중 카페 · 18평</h4>
+            <p class="card__loc">배후 아파트 1,200세대</p>
+            <p class="card__price">예시 · 권리 0,000만</p>
+            <div class="card__spec"><span>매출자료 확인</span><span>시설 인수</span></div>
+          </div>
+        </article>
+
+        <article class="card" data-type="bldg">
+          <div class="card__img"><div class="fill v-bldg"></div><span class="card__tag">매매</span></div>
+          <div class="card__body">
+            <h4>근생 4층 · 대지 00평</h4>
+            <p class="card__loc">경기 남부 · 대로변 접함</p>
+            <p class="card__price">예시 · 매매 00억</p>
+            <div class="card__spec"><span>공실 1</span><span>엘리베이터</span></div>
+          </div>
+        </article>
+
+        <article class="card" data-type="bldg">
+          <div class="card__img"><div class="fill v-bldg"></div><span class="card__tag">매매</span></div>
+          <div class="card__body">
+            <h4>원룸 건물 · 12세대</h4>
+            <p class="card__loc">역세권 도보권 · 만실</p>
+            <p class="card__price">예시 · 매매 00억 0,000만</p>
+            <div class="card__spec"><span>수익률 자료</span><span>임차 구성 확인</span></div>
+          </div>
+        </article>
+
+      </div>
+
+      <p class="empty" id="empty">이 조건으로 공개된 매물이 지금은 없습니다. 전화 주시면 비공개 물건까지 확인해 드립니다.</p>
+
+      <div class="arrows">
+        <button class="arrow" id="prev" aria-label="이전 매물">
+          <svg viewBox="0 0 24 24"><path d="M15 4 L7 12 L15 20"/></svg>
+        </button>
+        <button class="arrow" id="next" aria-label="다음 매물">
+          <svg viewBox="0 0 24 24"><path d="M9 4 L17 12 L9 20"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PROOF ===================== -->
+<section class="proof wrap" id="proof">
+  <p class="eyebrow">중개소 소개</p>
+  <h2 style="font-size:clamp(24px,3vw,38px); margin-top:16px; max-width:20ch">계약이 끝나도 연락이 이어지는 이유</h2>
+  <ul>
+    <li>
+      <b>9년, 동탄만</b>
+      <p>다른 지역으로 넓히지 않았습니다. 한 지역을 오래 보면 시세보다 먼저 분위기가 보입니다.</p>
+    </li>
+    <li>
+      <b>현장 확인 후 등록</b>
+      <p>사진만 받아서 올리지 않습니다. 직접 보고, 임대인과 통화하고, 관리비까지 확인한 뒤 안내합니다.</p>
+    </li>
+    <li>
+      <b>불리한 조건도 먼저</b>
+      <p>단점을 숨기면 계약 후에 문제가 됩니다. 결정에 영향을 줄 만한 사항은 계약 전에 말씀드립니다.</p>
+    </li>
+    <li>
+      <b>계약 이후 관리</b>
+      <p>임대차 분쟁, 원상복구, 재계약 시점 확인까지 이어서 도와드립니다.</p>
+    </li>
+  </ul>
+</section>
+
+<!-- ===================== CONTACT ===================== -->
+<section class="contact" id="contact">
+  <div class="wrap contact__grid">
+    <div>
+      <h2>조건만 알려주시면 맞는 것만 골라 보내드립니다</h2>
+      <p>예산과 시기, 그리고 꼭 지켜야 할 조건 한 가지. 이 세 가지면 충분합니다.</p>
+    </div>
+    <div>
+      <a href="tel:01080306781" class="contact__num">010-8030-6781</a>
+      <div class="contact__meta">
+        <div><strong>상담</strong>평일 09:00 – 19:00 · 주말 예약 방문</div>
+        <div><strong>사무소</strong>동탄역반도타운공인중개사</div>
+        <div><strong>채널</strong>꼭티비채널 · 미세스머니</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="wrap foot">
+    <div class="brand">
+      <b>미세스머니</b>
+      <span>동탄역반도타운공인중개사</span>
+    </div>
+    <nav>
+      <a href="#apt">아파트</a>
+      <a href="#shop">상가·창업</a>
+      <a href="#finder">매물</a>
+      <a href="#proof">중개소 소개</a>
+      <a href="tel:01080306781">전화 상담</a>
+    </nav>
+    <div class="foot__legal">
+      경기도 화성시 · 동탄역반도타운공인중개사사무소 · 대표 미세스머니<br>
+      등록번호 / 사업자등록번호 / 사무소 주소는 실제 정보로 교체해 주세요. 게시된 매물 가격은 예시이며 실제 조건과 다를 수 있습니다.
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- 1. 로드 시퀀스 ---------- */
+  requestAnimationFrame(function () { document.body.classList.add('loaded'); });
+
+  /* ---------- 2. 네비 상태 + 히어로 패럴랙스 ---------- */
+  var nav = document.getElementById('nav');
+  var heroBg = document.getElementById('heroBg');
+  var ticking = false;
+
+  function onScroll() {
+    var y = window.scrollY || window.pageYOffset;
+    nav.classList.toggle('is-solid', y > 60);
+    if (!reduce && heroBg && y < window.innerHeight) {
+      heroBg.style.transform = 'translate3d(0,' + (y * 0.28) + 'px,0)';
+    }
+    ticking = false;
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
+  }, { passive: true });
+  onScroll();
+
+  /* ---------- 3. 모바일 메뉴 ---------- */
+  var burger = document.getElementById('burger');
+  var menu = document.getElementById('menu');
+  burger.addEventListener('click', function () {
+    var open = menu.classList.toggle('open');
+    burger.classList.toggle('on', open);
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+  });
+  menu.addEventListener('click', function (e) {
+    if (e.target.tagName === 'A') {
+      menu.classList.remove('open');
+      burger.classList.remove('on');
+      burger.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  /* ---------- 4. 매물 캐러셀 ---------- */
+  var rail = document.getElementById('rail');
+  var prev = document.getElementById('prev');
+  var next = document.getElementById('next');
+  var empty = document.getElementById('empty');
+
+  function step() {
+    var card = rail.querySelector('.card:not([hidden])');
+    if (!card) return rail.clientWidth;
+    return card.getBoundingClientRect().width + 22;
+  }
+  function syncArrows() {
+    var max = rail.scrollWidth - rail.clientWidth - 2;
+    prev.disabled = rail.scrollLeft <= 2;
+    next.disabled = rail.scrollLeft >= max;
+  }
+  prev.addEventListener('click', function () {
+    rail.scrollBy({ left: -step(), behavior: reduce ? 'auto' : 'smooth' });
+  });
+  next.addEventListener('click', function () {
+    rail.scrollBy({ left: step(), behavior: reduce ? 'auto' : 'smooth' });
+  });
+  rail.addEventListener('scroll', function () { requestAnimationFrame(syncArrows); }, { passive: true });
+  window.addEventListener('resize', syncArrows);
+
+  /* ---------- 5. 탭 필터 ---------- */
+  var tabs = document.querySelectorAll('.tab');
+  var cards = rail.querySelectorAll('.card');
+
+  Array.prototype.forEach.call(tabs, function (tab) {
+    tab.addEventListener('click', function () {
+      Array.prototype.forEach.call(tabs, function (t) { t.setAttribute('aria-selected', 'false'); });
+      tab.setAttribute('aria-selected', 'true');
+
+      var f = tab.dataset.filter;
+      var shown = 0;
+      Array.prototype.forEach.call(cards, function (card) {
+        var match = (f === 'all' || card.dataset.type === f);
+        card.hidden = !match;
+        if (match) shown++;
+      });
+
+      empty.style.display = shown ? 'none' : 'block';
+      rail.style.display = shown ? 'flex' : 'none';
+      rail.scrollTo({ left: 0, behavior: reduce ? 'auto' : 'smooth' });
+      syncArrows();
+    });
+  });
+
+  syncArrows();
+})();
+</script>
+</body>
+</html>
