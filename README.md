@@ -29,5 +29,12 @@ python3 -m http.server 8000
 
 ## 배포
 
-<!-- TODO: GitHub Pages 등 배포 방식을 정하면 주소와 절차를 적어 주세요. -->
-아직 정해지지 않았습니다.
+GitHub Pages로 배포합니다. `main` 브랜치의 루트 폴더가 그대로 사이트가 됩니다.
+
+- 메인 페이지: https://koj0531-rgb.github.io/msmoney/
+- 테트리스: https://koj0531-rgb.github.io/msmoney/tetris.html
+
+`main`에 변경이 합쳐지면 1~2분 안에 사이트에 자동 반영됩니다.
+처음 한 번은 저장소 **Settings → Pages**에서 Source를 `Deploy from a branch`, 브랜치를 `main` / `/ (root)`로 지정해야 합니다.
+
+루트의 `.nojekyll` 파일은 GitHub의 Jekyll 변환을 끄고 HTML을 있는 그대로 내보내게 합니다.
